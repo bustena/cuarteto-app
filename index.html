@@ -326,7 +326,7 @@ function mostrar() {
     if (solucionMostrada[indice]) {
       document.getElementById("anio").textContent = item.año;
       document.getElementById("descripcion").innerHTML = `${item.autor}<br>${item.obra}`;
-      detalles.classList.remove("hidden");
+      detalles.classList.remove("hidden", "invisible");
       if (item.color) document.body.style.backgroundColor = item.color;
       botones.style.display = "flex";
     } else {
