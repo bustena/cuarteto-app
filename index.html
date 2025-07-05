@@ -223,8 +223,6 @@ window.onload = () => {
     document.getElementById("cargando").classList.add("hidden");
     document.getElementById("seleccionModo").classList.remove("hidden");
   });
-    .then(res => res.json())
-    .then(res => {
       datos = res.sort(() => Math.random() - 0.5);
       solucionMostrada = new Array(datos.length).fill(false);
       document.getElementById("cargando").classList.add("hidden");
