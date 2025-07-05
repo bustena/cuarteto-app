@@ -131,6 +131,7 @@
       background-color: #222;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
@@ -211,18 +212,22 @@ let modoJuego = "";
 
 window.onload = () => {
   fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQs4TXjmTrFMGNTqModfxjqReQFxqSm3Hi7dojisH2PvX6CWoB3Z_AU42VGaHvkjcEysdlYzLpwk9ny/pub?output=csv")
-  .then(response => response.text())
-  .then(csv => {
-    const filas = csv.trim().split("\n").slice(1); // quita cabecera
-    datos = filas.map(linea => {
-      const [orden, año, autor, obra, url, color] = linea.split(",");
-      return { año, autor, obra, url, color };
-    }).sort(() => Math.random() - 0.5);
+    .then(response => response.text())
+    .then(csv => {
+      const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
 
-    solucionMostrada = new Array(datos.length).fill(false);
-    document.getElementById("cargando").classList.add("hidden");
-    document.getElementById("seleccionModo").classList.remove("hidden");
-  });
+      datos = parsed.data.map(fila => ({
+        año: fila["Año"],
+        autor: fila["Autor"],
+        obra: fila["Obra"],
+        url: fila["URL"],
+        color: fila["COLOR"]
+      })).sort(() => Math.random() - 0.5);
+
+      solucionMostrada = new Array(datos.length).fill(false);
+      document.getElementById("cargando").classList.add("hidden");
+      document.getElementById("seleccionModo").classList.remove("hidden");
+    });
 
   window.focus();
 
