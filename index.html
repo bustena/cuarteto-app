@@ -216,13 +216,16 @@ window.onload = () => {
     .then(csv => {
       const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
 
-      datos = parsed.data.map(fila => ({
-        año: fila["Año"],
-        autor: fila["Autor"],
-        obra: fila["Obra"],
-        url: fila["URL"],
-        color: fila["COLOR"]
-      })).sort(() => Math.random() - 0.5);
+datos = parsed.data
+  .slice(0, 40)  // ← lee solo filas 2 a 41
+  .map(fila => ({
+    año: fila["Año"],
+    autor: fila["Autor"],
+    obra: fila["Obra"],
+    url: fila["URL"],
+    color: fila["COLOR"]
+  }))
+  .sort(() => Math.random() - 0.5);
 
       solucionMostrada = new Array(datos.length).fill(false);
       document.getElementById("cargando").classList.add("hidden");
