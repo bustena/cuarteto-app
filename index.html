@@ -210,7 +210,19 @@ let URL_REGLAS = "https://view.genially.com/6834d0143c53b6064031a058?idSlide=709
 let modoJuego = "";
 
 window.onload = () => {
-  fetch("datos.json")
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQs4TXjmTrFMGNTqModfxjqReQFxqSm3Hi7dojisH2PvX6CWoB3Z_AU42VGaHvkjcEysdlYzLpwk9ny/pub?output=csv")
+  .then(response => response.text())
+  .then(csv => {
+    const filas = csv.trim().split("\n").slice(1); // quita cabecera
+    datos = filas.map(linea => {
+      const [orden, año, autor, obra, url, color] = linea.split(",");
+      return { año, autor, obra, url, color };
+    }).sort(() => Math.random() - 0.5);
+
+    solucionMostrada = new Array(datos.length).fill(false);
+    document.getElementById("cargando").classList.add("hidden");
+    document.getElementById("seleccionModo").classList.remove("hidden");
+  });
     .then(res => res.json())
     .then(res => {
       datos = res.sort(() => Math.random() - 0.5);
