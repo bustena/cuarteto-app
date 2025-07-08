@@ -115,6 +115,7 @@ function mostrar() {
     titulo.innerHTML = `Cuarteto de cuerda ${indice - jugadores}`;
     const audio = document.createElement("audio");
     audio.controls = true;
+    audio.autoplay = true;
     audio.src = item.url;
     document.getElementById("audio-container").appendChild(audio);
 
