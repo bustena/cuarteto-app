@@ -58,7 +58,13 @@ datos = parsed.data
         break;
       case " ":
         event.preventDefault();
-        if (audioGlobal) (audioGlobal.paused ? audioGlobal.play() : audioGlobal.pause());
+        if (audioGlobal) {
+          if (audioGlobal.paused) {
+            audioGlobal.play();
+          } else {
+            audioGlobal.pause();
+          }
+        }
         break;
       case "2": case "3": case "4": case "5": case "6":
         const bienvenida = document.getElementById("bienvenida");
@@ -129,10 +135,9 @@ function mostrar() {
     `;
     document.getElementById("audio-container").appendChild(cont);
 
-    // inicializar iconos Lucide
     lucide.createIcons();
 
-    // eventos de botones
+    // eventos
     document.getElementById("btnRew").onclick = () => {
       audioGlobal.currentTime = Math.max(0, audioGlobal.currentTime - 5);
     };
@@ -155,7 +160,7 @@ function mostrar() {
       }
     };
 
-    // actualizar icono automáticamente al pausar o terminar
+    // al pausar o terminar, actualizar icono
     audioGlobal.onpause = () => {
       const icon = document.querySelector("#btnPlayPause i");
       if (icon) {
