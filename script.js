@@ -2,6 +2,7 @@ let indice = 0;
 let datos = [];
 let jugadores = 0;
 let solucionMostrada = [];
+let audioGlobal = new Audio();
 let URL_REGLAS = "https://view.genially.com/6834d0143c53b6064031a058?idSlide=7099ad60-bc41-4a7a-83be-0fe6381c3869";
 let modoJuego = "";
 
