@@ -129,13 +129,24 @@ function mostrar() {
     const cont = document.createElement("div");
     cont.className = "custom-audio-controls";
     cont.innerHTML = `
-      <button id="btnRew" class="audio-btn"><i data-lucide="rewind"></i></button>
-      <button id="btnPlayPause" class="audio-btn"><i data-lucide="pause"></i></button>
-      <button id="btnFf" class="audio-btn"><i data-lucide="fast-forward"></i></button>
+      <button id="btnRew" class="audio-btn"></button>
+      <button id="btnPlayPause" class="audio-btn"></button>
+      <button id="btnFf" class="audio-btn"></button>
     `;
     document.getElementById("audio-container").appendChild(cont);
 
-    lucide.createIcons();
+    // función auxiliar para cambiar icono
+    function setIcon(buttonId, iconName) {
+      const btn = document.getElementById(buttonId);
+      if (btn) {
+        btn.innerHTML = lucide.icons[iconName].toSvg({ stroke: 'white', width: 28, height: 28 });
+      }
+    }
+
+    // establecer iconos iniciales
+    setIcon("btnRew", "rewind");
+    setIcon("btnPlayPause", "pause");
+    setIcon("btnFf", "fast-forward");
 
     // eventos de botones
     document.getElementById("btnRew").onclick = () => {
@@ -149,26 +160,19 @@ function mostrar() {
     document.getElementById("btnPlayPause").onclick = () => {
       if (audioGlobal.paused) {
         audioGlobal.play();
+        setIcon("btnPlayPause", "pause");
       } else {
         audioGlobal.pause();
+        setIcon("btnPlayPause", "play");
       }
     };
 
-    // listeners globales para actualizar icono
+    // listeners para actualizar icono automáticamente
     audioGlobal.onpause = () => {
-      const icon = document.querySelector("#btnPlayPause i");
-      if (icon) {
-        icon.setAttribute("data-lucide", "play");
-        lucide.createIcons();
-      }
+      setIcon("btnPlayPause", "play");
     };
-
     audioGlobal.onplay = () => {
-      const icon = document.querySelector("#btnPlayPause i");
-      if (icon) {
-        icon.setAttribute("data-lucide", "pause");
-        lucide.createIcons();
-      }
+      setIcon("btnPlayPause", "pause");
     };
 
     // mostrar detalles si ya estaba revelada la solución
