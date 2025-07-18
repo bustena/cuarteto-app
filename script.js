@@ -113,12 +113,49 @@ function mostrar() {
     document.getElementById("pantallaInicioJuego").classList.remove("hidden");
   } else {
     titulo.innerHTML = `Cuarteto de cuerda ${indice - jugadores}`;
-    const audio = document.createElement("audio");
-    audio.controls = true;
-    audio.autoplay = true;
-    audio.src = item.url;
-    document.getElementById("audio-container").appendChild(audio);
 
+    // configurar audio global
+    audioGlobal.src = item.url;
+    audioGlobal.currentTime = 0;
+    audioGlobal.play();
+
+    // crear controles personalizados
+    const cont = document.createElement("div");
+    cont.className = "custom-audio-controls";
+    cont.innerHTML = `
+      <button id="btnRew" class="audio-btn"><i data-lucide="rewind"></i></button>
+      <button id="btnPlayPause" class="audio-btn"><i data-lucide="pause"></i></button>
+      <button id="btnFf" class="audio-btn"><i data-lucide="fast-forward"></i></button>
+    `;
+    document.getElementById("audio-container").appendChild(cont);
+
+    // inicializar iconos Lucide
+    lucide.createIcons();
+
+    // eventos
+    document.getElementById("btnRew").onclick = () => {
+      audioGlobal.currentTime = Math.max(0, audioGlobal.currentTime - 5);
+    };
+
+    document.getElementById("btnFf").onclick = () => {
+      audioGlobal.currentTime = Math.min(audioGlobal.duration, audioGlobal.currentTime + 5);
+    };
+
+    document.getElementById("btnPlayPause").onclick = () => {
+      if (audioGlobal.paused) {
+        audioGlobal.play();
+        const icon = document.querySelector("#btnPlayPause i");
+        icon.setAttribute("data-lucide", "pause");
+        lucide.createIcons();
+      } else {
+        audioGlobal.pause();
+        const icon = document.querySelector("#btnPlayPause i");
+        icon.setAttribute("data-lucide", "play");
+        lucide.createIcons();
+      }
+    };
+
+    // mostrar detalles si ya estaba revelada la solución
     if (solucionMostrada[indice]) {
       document.getElementById("anio").textContent = item.año;
       document.getElementById("descripcion").innerHTML = `${item.autor}<br>${item.obra}`;
