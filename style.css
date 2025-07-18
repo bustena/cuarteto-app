@@ -1,18 +1,20 @@
-/* --- Estructura general --- */
+/* Estilo base */
 body {
   font-family: Lato, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f5eee6;
   color: #5c3e36;
+  text-align: center;
 }
 
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.5em 1em;
+  justify-content: center;
+  padding: 1em;
   background: #eee;
+  gap: 1em;
 }
 
 header .logo {
@@ -20,11 +22,11 @@ header .logo {
 }
 
 .titulo-principal {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
-/* Ocultar/mostrar elementos */
+/* Estados */
 .hidden {
   display: none !important;
 }
@@ -33,12 +35,43 @@ header .logo {
   visibility: hidden;
 }
 
-/* Botones generales de la interfaz */
+/* Contenedores principales */
+#cargando,
+#seleccionModo,
+#bienvenida,
+#pantallaInicioJuego,
+#contenido {
+  margin-top: 2em;
+}
+
+#titulo {
+  margin: 1em 0;
+}
+
+.cuarteto-numero {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#detalles {
+  margin: 1em 0;
+}
+
+#anio {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+#descripcion {
+  margin-top: 0.5em;
+}
+
+/* Botones generales */
 button {
   font-family: inherit;
   font-size: 1rem;
   padding: 0.5em 1em;
-  margin: 0.2em;
+  margin: 0.3em;
   border: none;
   border-radius: 0.5em;
   background: #765348;
@@ -51,15 +84,15 @@ button:hover {
   background: #5c3e36;
 }
 
-/* Contenedor de audio personalizado */
+/* Controles personalizados de audio */
 .custom-audio-controls {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1em;
   margin-top: 1em;
 }
 
-/* Botones de control de audio */
 .audio-btn {
   background: #765348;
   border: none;
@@ -82,24 +115,17 @@ button:hover {
   stroke: #fff;
 }
 
-/* Contenedores de texto */
-.cuarteto-numero {
-  font-size: 1.4rem;
-  font-weight: bold;
-  text-align: center;
+/* Contenedor botones navegación */
+#botones {
   margin-top: 1em;
 }
 
-#anio {
-  font-weight: bold;
-  margin-bottom: 0.3em;
+/* Pantalla de reinicio */
+#reinicio {
+  margin-top: 2em;
 }
 
-#descripcion {
-  margin-top: 0.3em;
-}
-
-/* Botón fijo para las reglas */
+/* Botón fijo de reglas */
 #boton-reglas-global {
   position: fixed;
   bottom: 0;
