@@ -58,8 +58,7 @@ datos = parsed.data
         break;
       case " ":
         event.preventDefault();
-        const audio = document.querySelector("#audio-container audio");
-        if (audio) (audio.paused ? audio.play() : audio.pause());
+        if (audioGlobal) (audioGlobal.paused ? audioGlobal.play() : audioGlobal.pause());
         break;
       case "2": case "3": case "4": case "5": case "6":
         const bienvenida = document.getElementById("bienvenida");
