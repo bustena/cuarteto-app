@@ -132,7 +132,7 @@ function mostrar() {
     // inicializar iconos Lucide
     lucide.createIcons();
 
-    // eventos
+    // eventos de botones
     document.getElementById("btnRew").onclick = () => {
       audioGlobal.currentTime = Math.max(0, audioGlobal.currentTime - 5);
     };
@@ -150,6 +150,23 @@ function mostrar() {
       } else {
         audioGlobal.pause();
         const icon = document.querySelector("#btnPlayPause i");
+        icon.setAttribute("data-lucide", "play");
+        lucide.createIcons();
+      }
+    };
+
+    // actualizar icono automáticamente al pausar o terminar
+    audioGlobal.onpause = () => {
+      const icon = document.querySelector("#btnPlayPause i");
+      if (icon) {
+        icon.setAttribute("data-lucide", "play");
+        lucide.createIcons();
+      }
+    };
+
+    audioGlobal.onended = () => {
+      const icon = document.querySelector("#btnPlayPause i");
+      if (icon) {
         icon.setAttribute("data-lucide", "play");
         lucide.createIcons();
       }
