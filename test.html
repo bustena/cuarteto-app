@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+.audio-btn { background:#222;color:#fff;border-radius:10px;padding:10px;cursor:pointer; }
+.audio-btn svg{width:24px;height:24px;stroke:#fff;}
+</style>
+</head>
+<body>
+<div id="audio-container"></div>
+<script>
+let audioGlobal = new Audio("https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg");
+audioGlobal.play();
+
+const cont = document.createElement("div");
+cont.innerHTML = `
+  <button id="btnPlayPause" class="audio-btn"><i data-lucide="pause"></i></button>
+`;
+document.getElementById("audio-container").appendChild(cont);
+lucide.createIcons();
+
+document.getElementById("btnPlayPause").onclick = () => {
+  if (audioGlobal.paused) { audioGlobal.play(); }
+  else { audioGlobal.pause(); }
+};
+
+audioGlobal.onpause = () => {
+  console.log("pausado");
+  const icon = document.querySelector("#btnPlayPause i");
+  icon.setAttribute("data-lucide","play");
+  lucide.createIcons();
+};
+audioGlobal.onplay = () => {
+  console.log("reproduciendo");
+  const icon = document.querySelector("#btnPlayPause i");
+  icon.setAttribute("data-lucide","pause");
+  lucide.createIcons();
+};
+</script>
+</body>
+</html>
