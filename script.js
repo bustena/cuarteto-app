@@ -114,77 +114,74 @@ function mostrar() {
     titulo.innerHTML = `<div class="inicio-label">Año de inicio del jugador/equipo ${indice + 1}</div><div class="inicio-anio">${item.año}</div>`;
     botones.style.display = "flex";
     document.getElementById("btnAnterior").style.display = (indice === 0) ? "none" : "inline-block";
-  } else if (indice === jugadores) {
+    return;
+  }
+
+  if (indice === jugadores) {
     document.getElementById("contenido").classList.add("hidden");
     document.getElementById("pantallaInicioJuego").classList.remove("hidden");
-  } else {
-    titulo.innerHTML = `Cuarteto de cuerda ${indice - jugadores}`;
+    return;
+  }
 
-    // configurar audio global
-    audioGlobal.src = item.url;
-    audioGlobal.currentTime = 0;
-    audioGlobal.play();
+  // a partir de aquí es una obra
+  titulo.innerHTML = `Cuarteto de cuerda ${indice - jugadores}`;
 
-    // crear controles personalizados
-    const cont = document.createElement("div");
-    cont.className = "custom-audio-controls";
-    cont.innerHTML = `
-      <button id="btnRew" class="audio-btn"></button>
-      <button id="btnPlayPause" class="audio-btn"></button>
-      <button id="btnFf" class="audio-btn"></button>
-    `;
-    document.getElementById("audio-container").appendChild(cont);
+  audioGlobal.src = item.url;
+  audioGlobal.currentTime = 0;
+  audioGlobal.play();
 
-    // función auxiliar para cambiar icono
-    function setIcon(buttonId, iconName) {
-      const btn = document.getElementById(buttonId);
-      if (btn) {
-        btn.innerHTML = lucide.icons[iconName].toSvg({ stroke: 'white', width: 28, height: 28 });
-      }
-    }
+  const cont = document.createElement("div");
+  cont.className = "custom-audio-controls";
+  cont.innerHTML = `
+    <button id="btnRew" class="audio-btn"><i data-lucide="rewind"></i></button>
+    <button id="btnPlayPause" class="audio-btn"><i data-lucide="pause"></i></button>
+    <button id="btnFf" class="audio-btn"><i data-lucide="fast-forward"></i></button>
+  `;
+  document.getElementById("audio-container").appendChild(cont);
+  lucide.createIcons();
 
-    // establecer iconos iniciales
-    setIcon("btnRew", "rewind");
-    setIcon("btnPlayPause", "pause");
-    setIcon("btnFf", "fast-forward");
-
-    // eventos de botones
-    document.getElementById("btnRew").onclick = () => {
-      audioGlobal.currentTime = Math.max(0, audioGlobal.currentTime - 5);
-    };
-
-    document.getElementById("btnFf").onclick = () => {
-      audioGlobal.currentTime = Math.min(audioGlobal.duration, audioGlobal.currentTime + 5);
-    };
-
-    document.getElementById("btnPlayPause").onclick = () => {
-      if (audioGlobal.paused) {
-        audioGlobal.play();
-        setIcon("btnPlayPause", "pause");
-      } else {
-        audioGlobal.pause();
-        setIcon("btnPlayPause", "play");
-      }
-    };
-
-    // listeners para actualizar icono automáticamente
-    audioGlobal.onpause = () => {
-      setIcon("btnPlayPause", "play");
-    };
-    audioGlobal.onplay = () => {
-      setIcon("btnPlayPause", "pause");
-    };
-
-    // mostrar detalles si ya estaba revelada la solución
-    if (solucionMostrada[indice]) {
-      document.getElementById("anio").textContent = item.año;
-      document.getElementById("descripcion").innerHTML = `${item.autor}<br>${item.obra}`;
-      detalles.classList.remove("hidden", "invisible");
-      if (item.color) document.body.style.backgroundColor = item.color;
-      botones.style.display = "flex";
+  // botones
+  document.getElementById("btnRew").onclick = () => {
+    audioGlobal.currentTime = Math.max(0, audioGlobal.currentTime - 5);
+  };
+  document.getElementById("btnFf").onclick = () => {
+    audioGlobal.currentTime = Math.min(audioGlobal.duration, audioGlobal.currentTime + 5);
+  };
+  document.getElementById("btnPlayPause").onclick = () => {
+    const boton = document.getElementById("btnPlayPause");
+    if (audioGlobal.paused) {
+      audioGlobal.play().then(() => {
+        boton.innerHTML = '<i data-lucide="pause"></i>';
+        lucide.createIcons();
+      });
     } else {
-      solucion.classList.remove("hidden");
+      audioGlobal.pause();
+      boton.innerHTML = '<i data-lucide="play"></i>';
+      lucide.createIcons();
     }
+  };
+
+  // eventos para actualizar icono al pausar o al reanudar por otros medios
+  audioGlobal.onpause = () => {
+    const boton = document.getElementById("btnPlayPause");
+    boton.innerHTML = '<i data-lucide="play"></i>';
+    lucide.createIcons();
+  };
+  audioGlobal.onplay = () => {
+    const boton = document.getElementById("btnPlayPause");
+    boton.innerHTML = '<i data-lucide="pause"></i>';
+    lucide.createIcons();
+  };
+
+  // mostrar detalles si ya estaba revelada la solución
+  if (solucionMostrada[indice]) {
+    document.getElementById("anio").textContent = item.año;
+    document.getElementById("descripcion").innerHTML = `${item.autor}<br>${item.obra}`;
+    detalles.classList.remove("hidden", "invisible");
+    if (item.color) document.body.style.backgroundColor = item.color;
+    botones.style.display = "flex";
+  } else {
+    solucion.classList.remove("hidden");
   }
 }
 
