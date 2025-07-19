@@ -33,11 +33,11 @@
 <div id="bienvenida" class="hidden">
   <p><strong>Número de jugadores o equipos (2–6)</strong></p>
   <div>
-    <button onclick="empezar(2)">2</button>
-    <button onclick="empezar(3)">3</button>
-    <button onclick="empezar(4)">4</button>
-    <button onclick="empezar(5)">5</button>
-    <button onclick="empezar(6)">6</button>
+    <button onclick="empezar(2)" title="Atajo: tecla 2">2</button>
+    <button onclick="empezar(3)" title="Atajo: tecla 3">3</button>
+    <button onclick="empezar(4)" title="Atajo: tecla 4">4</button>
+    <button onclick="empezar(5)" title="Atajo: tecla 5">5</button>
+    <button onclick="empezar(6)" title="Atajo: tecla 6">6</button>
   </div>
   <div style="margin-top: 1em;">
     <button onclick="volverASeleccionModo()">⬅ Anterior</button>
@@ -63,12 +63,12 @@
   <div id="audio-container"></div>
 
   <div id="botonSolucion">
-    <button onclick="mostrarSolucion()" id="btnSolucion">🎯 Solución</button>
+    <button onclick="mostrarSolucion()" id="btnSolucion" title="Atajo: Enter">🎯 Solución</button>
   </div>
 
   <div id="botones">
-    <button onclick="anterior()" id="btnAnterior">⬅ Anterior</button>
-    <button onclick="siguiente()" id="btnSiguiente">Siguiente ➡</button>
+    <button onclick="anterior()" id="btnAnterior" title="Atajo: ← (flecha izquierda)">⬅ Anterior</button>
+    <button onclick="siguiente()" id="btnSiguiente" title="Atajo: → (flecha derecha)">Siguiente ➡</button>
   </div>
 
   <div id="reinicio" class="hidden">
